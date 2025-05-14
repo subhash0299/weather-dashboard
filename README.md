@@ -96,6 +96,7 @@ src/
 - Persistent dark mode preference
 
 ### UI/UX
+![alt text](image.png)
 - Clean and modern design
 - Responsive layout for all devices
 - Smooth transitions and animations
