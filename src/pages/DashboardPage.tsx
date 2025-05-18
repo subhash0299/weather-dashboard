@@ -20,7 +20,7 @@ const DashboardPage: React.FC = () => {
   // Load default city on initial render
   useEffect(() => {
     if (initialLoad) {
-      getWeatherForCity('London');
+      getWeatherForCity('Bengaluru');
       setInitialLoad(false);
     }
   }, [initialLoad, getWeatherForCity]);
