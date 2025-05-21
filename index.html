@@ -1,14 +1,59 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
+    <!-- Google Site Verification -->
     <meta name="google-site-verification" content="VIVuAD4uv5CJv554NfIs9hAktdqx86lwHXhPoqweF7M" />
+
+    <!-- Charset & Responsive -->
     <meta charset="UTF-8" />
-    <title>Live Weather Dashboard | Real-Time Forecasts & Dark Mode</title>
-    <meta name="description" content="Stay ahead with our live Weather Dashboard. Get real-time weather updates, forecasts, and dark mode support for your favorite locations." />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- SEO Meta Tags -->
+    <title>Live Weather Dashboard | Real-Time Weather Updates & Forecasts</title>
+    <meta name="description" content="Get accurate real-time weather updates for any location. Forecasts, temperature, humidity, and dark mode — all in one fast and clean weather dashboard." />
+    <meta name="keywords" content="live weather, weather dashboard, real-time forecast, current temperature, dark mode weather, weather updates, rohan's weather app, subhash's weather app" />
+    <meta name="author" content="Rohan's Weather App" />
+    <link rel="canonical" href="https://weather-dashboard-green-omega.vercel.app/" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+
+    <!-- Open Graph Meta Tags (For Social Sharing) -->
+    <meta property="og:title" content="Live Weather Dashboard" />
+    <meta property="og:description" content="Stay updated with real-time weather forecasts and dark mode support for your favorite locations." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://weather-dashboard-green-omega.vercel.app/" />
+    <meta property="og:image" content="https://weather-dashboard-green-omega.vercel.app/preview.jpg" />
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Live Weather Dashboard" />
+    <meta name="twitter:description" content="Get real-time weather updates with dark mode support. Beautiful and accurate forecasts." />
+    <meta name="twitter:image" content="https://weather-dashboard-green-omega.vercel.app/preview.jpg" />
+
+    <!-- Schema.org JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Live Weather Dashboard",
+      "url": "https://weather-dashboard-green-omega.vercel.app/",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://weather-dashboard-green-omega.vercel.app/search?query={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+
+    <!-- Performance -->
+    <link rel="preconnect" href="https://api.openweathermap.org" />
+    <link rel="dns-prefetch" href="https://api.openweathermap.org" />
   </head>
+
   <body>
+    <noscript>You need to enable JavaScript to view the weather dashboard properly.</noscript>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
