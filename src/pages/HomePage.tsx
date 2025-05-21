@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CloudSun, MapPin, Moon } from 'lucide-react';
+import { CloudSun, MapPin } from 'lucide-react';
 
 const HomePage: React.FC = () => {
   const navigate = useNavigate();
@@ -32,7 +32,7 @@ const HomePage: React.FC = () => {
         </div>
 
         {/* Features Section */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-20">
           <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-6 rounded-xl shadow-lg transition-all duration-300 hover:transform hover:translate-y-[-4px] border border-purple-100 dark:border-purple-900">
             <div className="inline-flex items-center justify-center p-3 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg text-white mb-4">
               <CloudSun className="h-8 w-8" />
@@ -54,18 +54,6 @@ const HomePage: React.FC = () => {
             </h3>
             <p className="text-gray-600 dark:text-gray-300">
               Search for any location worldwide and get instant access to detailed weather information.
-            </p>
-          </div>
-
-          <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-6 rounded-xl shadow-lg transition-all duration-300 hover:transform hover:translate-y-[-4px] border border-blue-100 dark:border-blue-900">
-            <div className="inline-flex items-center justify-center p-3 bg-gradient-to-br from-blue-500 to-purple-500 rounded-lg text-white mb-4">
-              <Moon className="h-8 w-8" />
-            </div>
-            <h3 className="text-xl font-semibold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">
-              Dark Mode
-            </h3>
-            <p className="text-gray-600 dark:text-gray-300">
-              Customize your viewing experience with a sleek dark mode that's easier on your eyes at night.
             </p>
           </div>
         </div>
