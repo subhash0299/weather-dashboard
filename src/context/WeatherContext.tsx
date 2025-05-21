@@ -1,6 +1,5 @@
-import React, { createContext, useState, useContext, useEffect } from 'react';
+import React, { createContext, useState, useContext } from 'react';
 import { WeatherData, ForecastData, FavoriteCity } from '../types';
-import { useAuth } from './AuthContext';
 
 interface WeatherContextType {
   currentWeather: WeatherData | null;
@@ -39,25 +38,6 @@ export const WeatherProvider: React.FC<{ children: React.ReactNode }> = ({ child
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [favoriteLocations, setFavoriteLocations] = useState<FavoriteCity[]>([]);
-  
-  const { isAuthenticated, user } = useAuth();
-
-  // Load favorites from localStorage when authenticated
-  useEffect(() => {
-    if (isAuthenticated && user) {
-      const storedFavorites = localStorage.getItem(`weatherFavorites_${user.id}`);
-      if (storedFavorites) {
-        try {
-          const favorites = JSON.parse(storedFavorites);
-          setFavoriteLocations(favorites);
-        } catch (error) {
-          console.error('Failed to parse stored favorites:', error);
-        }
-      }
-    } else {
-      setFavoriteLocations([]);
-    }
-  }, [isAuthenticated, user]);
 
   // Get weather data for a city
   const getWeatherForCity = async (city: string): Promise<void> => {
@@ -115,33 +95,18 @@ export const WeatherProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
   // Add a city to favorites
   const addToFavorites = (city: FavoriteCity): void => {
-    if (!isAuthenticated || !user) return;
-
-    // Check if city is already in favorites
     if (!favoriteLocations.some((loc) => loc.id === city.id)) {
       const updatedFavorites = [...favoriteLocations, city];
       setFavoriteLocations(updatedFavorites);
-      
-      // Save to localStorage
-      localStorage.setItem(
-        `weatherFavorites_${user.id}`,
-        JSON.stringify(updatedFavorites)
-      );
+      localStorage.setItem('weatherFavorites', JSON.stringify(updatedFavorites));
     }
   };
 
   // Remove a city from favorites
   const removeFromFavorites = (cityId: number): void => {
-    if (!isAuthenticated || !user) return;
-
     const updatedFavorites = favoriteLocations.filter((city) => city.id !== cityId);
     setFavoriteLocations(updatedFavorites);
-    
-    // Save to localStorage
-    localStorage.setItem(
-      `weatherFavorites_${user.id}`,
-      JSON.stringify(updatedFavorites)
-    );
+    localStorage.setItem('weatherFavorites', JSON.stringify(updatedFavorites));
   };
 
   return (

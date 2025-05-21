@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { Navigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
 import { useWeather } from '../context/WeatherContext';
 import SearchBar from '../components/weather/SearchBar';
 import WeatherCard from '../components/weather/WeatherCard';
@@ -8,34 +6,29 @@ import ForecastCard from '../components/weather/ForecastCard';
 import { Loader } from 'lucide-react';
 
 const DashboardPage: React.FC = () => {
-  const { isAuthenticated } = useAuth();
   const { currentWeather, forecast, isLoading, error, getWeatherForCity } = useWeather();
   const [initialLoad, setInitialLoad] = useState(true);
 
-  // If not authenticated, redirect to login
-  if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
-  }
-
-  // Load default city on initial render
   useEffect(() => {
     if (initialLoad) {
-      getWeatherForCity('Bengaluru');
+      getWeatherForCity('London');
       setInitialLoad(false);
     }
   }, [initialLoad, getWeatherForCity]);
 
   return (
-    <div className="min-h-[calc(100vh-64px)] bg-gray-100 dark:bg-gray-900 py-8 px-4 sm:px-6 lg:px-8 transition-colors duration-300">
+    <div className="min-h-[calc(100vh-64px)] bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50 dark:from-gray-900 dark:via-purple-900 dark:to-blue-900 py-8 px-4 sm:px-6 lg:px-8 transition-colors duration-300">
       <div className="max-w-7xl mx-auto">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Weather Dashboard</h1>
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-4">
+            Weather Dashboard
+          </h1>
           <SearchBar />
         </div>
 
         {isLoading ? (
           <div className="flex items-center justify-center py-16">
-            <Loader className="h-10 w-10 text-blue-600 dark:text-blue-400 animate-spin" />
+            <Loader className="h-10 w-10 text-purple-600 dark:text-purple-400 animate-spin" />
             <span className="ml-3 text-lg text-gray-600 dark:text-gray-300">Loading weather data...</span>
           </div>
         ) : error ? (
