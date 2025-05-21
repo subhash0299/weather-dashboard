@@ -11,7 +11,7 @@ const DashboardPage: React.FC = () => {
 
   useEffect(() => {
     if (initialLoad) {
-      getWeatherForCity('London');
+      getWeatherForCity('Delhi');
       setInitialLoad(false);
     }
   }, [initialLoad, getWeatherForCity]);
