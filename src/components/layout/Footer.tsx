@@ -33,8 +33,24 @@ const Footer: React.FC = () => {
             </a>
           </div>
         </div>
-        <div className="mt-4 text-center text-xs text-gray-500 dark:text-gray-500">
-          Weather data provided by OpenWeatherMap
+        <div className="mt-0 flex items-center justify-center space-x-3 text-xs text-gray-500 dark:text-gray-500">
+          <img
+            src="/sk.jpg" // Replace with your actual photo path
+            alt="Subha"
+            className="w-12 h-12 rounded-full border-2 border-purple-400 object-cover"
+          />
+          <span className="font-semibold text-gray-700 dark:text-gray-300">
+            Subhash Bishnoi
+          </span>
+          <a
+            href="https://github.com/subhash0299" // Replace with your GitHub profile URL
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+          >
+            <Github className="h-6 w-6" />
+          </a>
+          <span className="ml-2">Follow Me</span>
         </div>
       </div>
     </footer>
