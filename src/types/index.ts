@@ -32,6 +32,11 @@ export interface WeatherData {
     speed: number;
     deg: number;
   };
+  /** Meters; OpenWeather may omit in edge cases */
+  visibility?: number;
+  clouds?: {
+    all: number;
+  };
   sys: {
     country: string;
     sunrise: number;
@@ -45,27 +50,33 @@ export interface WeatherData {
   };
 }
 
+export interface ForecastListItem {
+  dt: number;
+  main: {
+    temp: number;
+    feels_like: number;
+    temp_min: number;
+    temp_max: number;
+    pressure: number;
+    humidity: number;
+  };
+  weather: Weather[];
+  wind: {
+    speed: number;
+    deg: number;
+  };
+  /** Probability of precipitation, 0–1 */
+  pop?: number;
+  dt_txt: string;
+}
+
 export interface ForecastData {
-  list: {
-    dt: number;
-    main: {
-      temp: number;
-      feels_like: number;
-      temp_min: number;
-      temp_max: number;
-      pressure: number;
-      humidity: number;
-    };
-    weather: Weather[];
-    wind: {
-      speed: number;
-      deg: number;
-    };
-    dt_txt: string;
-  }[];
+  list: ForecastListItem[];
   city: {
     name: string;
     country: string;
+    /** Seconds offset from UTC */
+    timezone?: number;
   };
 }
 
