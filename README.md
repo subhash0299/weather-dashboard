@@ -1,117 +1,141 @@
 # Weather Dashboard
 
-A beautiful and fully-featured weather dashboard application built with React, TypeScript, and Tailwind CSS. Get real-time weather data, save your favorite locations, and enjoy a seamless dark mode experience.
+A polished weather dashboard built with React, TypeScript, and Tailwind CSS. It uses the OpenWeatherMap API for live conditions, forecasts, and geocoding, with favorites, dark mode, and a layout tuned for portfolio or production demos.
 
 ![Weather Dashboard](https://images.pexels.com/photos/1118873/pexels-photo-1118873.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2)
 
+## Recent updates
+
+- **Rich current conditions**: Visibility, pressure (hPa), cloud coverage, sunrise/sunset (local time), min/max, humidity, and wind in km/h. **Feels like** is emphasized with clear typography.
+- **OpenWeather icons**: Current weather uses official **`img/wn/{icon}@2x.png`** artwork from OpenWeatherMap for a native-app look.
+- **Hourly-style forecast**: Next ~24 hours in **3-hour steps** (8 slots) with icons, temperature, and wind.
+- **5-day forecast**: Per-day **high/low**, **rain probability** (from `pop`), **max wind**, and **average humidity**, grouped by local calendar day using the API timezone.
+- **Search UX**: **Enter** or **Search** submits the form; **Geocoding API** suggestions (debounced) with a dropdown to pick a city.
+- **Refresh & last updated**: Toolbar shows **relative** last update (e.g. “2 mins ago”, refreshed every 30s) and a **Refresh** control to reload the current city.
+- **Weather-based UI**: Dashboard background and card header gradients react to condition (clear, rain, clouds, thunderstorm, snow, fog, day/night).
+- **Context & persistence**: Favorites load from **`localStorage`** on app start; weather context tracks **`currentCityQuery`**, **`lastUpdated`**, and **`refreshWeather()`**.
+
 ## Features
 
-- 🌤️ Real-time weather data from OpenWeatherMap API
-- 🔐 User authentication with email/password
-- ❤️ Save and manage favorite locations
-- 🌙 Dark mode support
-- 📱 Fully responsive design
-- 🎯 5-day weather forecast
-- 🔍 Search for any city worldwide
+- Real-time weather from [OpenWeatherMap](https://openweathermap.org/) (current + 5-day/3-hour forecast)
+- Geocoding-powered city search with optional suggestions
+- User authentication (demo: local storage)
+- Favorite locations with persistence
+- Dark mode
+- Responsive layout
+- Loading and error states
 
-## Tech Stack
+## Tech stack
 
 - React 18
 - TypeScript
 - Tailwind CSS
 - Vite
-- Lucide React Icons
+- Lucide React
 - React Router DOM
 
-## Getting Started
+## Getting started
 
 ### Prerequisites
 
-- Node.js (v18 or higher)
+- Node.js 18+
 - npm or yarn
-- OpenWeatherMap API key
+- [OpenWeatherMap API key](https://openweathermap.org/api) (free tier works for current weather, forecast, and geocoding)
 
 ### Installation
 
 1. Clone the repository:
+
 ```bash
 git clone https://github.com/yourusername/weather-dashboard.git
 cd weather-dashboard
 ```
 
 2. Install dependencies:
+
 ```bash
 npm install
 ```
 
-3. Create a `.env` file in the root directory and add your OpenWeatherMap API key:
+3. Create a `.env` file in the project root:
+
 ```env
 VITE_OPENWEATHERMAP_API_KEY=your_api_key_here
 ```
 
-4. Start the development server:
+4. Start the dev server:
+
 ```bash
 npm run dev
 ```
 
-The app will be available at `http://localhost:5173`
+Open `http://localhost:5173` (or the URL Vite prints).
 
-### Building for Production
-
-To create a production build:
+### Production build
 
 ```bash
 npm run build
 ```
 
-The built files will be in the `dist` directory.
+Output is in `dist/`. Preview locally with `npm run preview`.
 
-## Project Structure
+## Project structure
 
 ```
 src/
-├── components/         # Reusable components
-│   ├── auth/          # Authentication components
-│   ├── layout/        # Layout components
-│   └── weather/       # Weather-related components
-├── context/           # React context providers
-├── pages/             # Page components
-├── types/             # TypeScript type definitions
-└── main.tsx          # Application entry point
+├── components/
+│   ├── auth/           # Login / signup
+│   ├── layout/         # Navbar, footer
+│   └── weather/        # WeatherCard, ForecastCard, HourlyForecast, SearchBar, WeatherIcon
+├── context/            # Auth, theme, weather (API + favorites + refresh)
+├── pages/              # Home, dashboard, favorites, login, signup
+├── types/              # Shared TypeScript types
+├── utils/              # weatherTheme (gradients), formatRelativeTime
+├── App.tsx
+└── main.tsx
 ```
 
-## Features in Detail
+## Features in detail
 
-### Weather Data
-- Current weather conditions
-- Temperature (Celsius)
-- Humidity and wind speed
-- Weather description and icons
-- 5-day forecast
+### Weather data
 
-### User Features
-- User registration and login
-- Save favorite locations
-- Quick access to saved locations
-- Persistent dark mode preference
+- Current: temperature, feels like, description, OpenWeather icon image
+- Wind (km/h), humidity, visibility, pressure, cloud cover
+- Sunrise and sunset (local offset from API)
+- Hourly strip: next 8 forecast steps (~24 h)
+- 5-day summary: daily min/max, rain %, wind, humidity
 
-### UI/UX
-![alt text](image.png)
-- Clean and modern design
-- Responsive layout for all devices
-- Smooth transitions and animations
-- Intuitive navigation
-- Loading states and error handling
+### User features
+
+- Register and log in (demo credentials stored client-side; not for real secrets)
+- Add/remove favorites from the dashboard when logged in
+- Favorites page with quick navigation back to the dashboard
+
+### UI / UX
+
+- Condition-based page and card gradients (`src/utils/weatherTheme.ts`)
+- Wider main card (`max-w-2xl`), stronger shadow, rounded corners
+- Search button + keyboard submit + geolocation name suggestions
+
+## API usage
+
+The app calls:
+
+- `GET /data/2.5/weather` — current weather  
+- `GET /data/2.5/forecast` — 5-day forecast in 3-hour steps  
+- `GET /geo/1.0/direct` — city search suggestions  
+
+All use the same `VITE_OPENWEATHERMAP_API_KEY`.
 
 ## Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+Pull requests are welcome.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License — see [LICENSE](LICENSE).
 
 ## Acknowledgments
 
-- Weather data provided by [OpenWeatherMap](https://openweathermap.org/)
-- Icons by [Lucide](https://lucide.dev/)
+- Weather data and icons: [OpenWeatherMap](https://openweathermap.org/)
+- UI icons: [Lucide](https://lucide.dev/)
