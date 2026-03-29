@@ -19,8 +19,10 @@ function formatLocalTime(unixUtc: number, timezoneOffsetSec: number): string {
 }
 
 const WeatherCard: React.FC<WeatherCardProps> = ({ weatherData }) => {
-  const { favoriteLocations, addToFavorites, removeFromFavorites } = useWeather();
+  const { favoriteLocations, addToFavorites, removeFromFavorites, displayCityName } = useWeather();
   const { isAuthenticated } = useAuth();
+
+  const cityTitle = displayCityName ?? weatherData.name;
 
   const isFavorite = favoriteLocations.some((city) => city.id === weatherData.id);
 
@@ -30,7 +32,7 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ weatherData }) => {
     } else {
       addToFavorites({
         id: weatherData.id,
-        name: weatherData.name,
+        name: cityTitle,
         country: weatherData.sys.country,
       });
     }
@@ -66,7 +68,7 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ weatherData }) => {
       <div className={`p-6 sm:p-8 bg-gradient-to-r ${heroGradient} text-white`}>
         <div className="flex justify-between items-start gap-4">
           <div className="min-w-0">
-            <h2 className="text-3xl sm:text-4xl font-bold truncate">{weatherData.name}</h2>
+            <h2 className="text-3xl sm:text-4xl font-bold truncate">{cityTitle}</h2>
             <p className="text-sm opacity-90">{weatherData.sys.country}</p>
             <p className="text-sm mt-1 opacity-80">{currentDate}</p>
           </div>

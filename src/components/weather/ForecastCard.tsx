@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import { ForecastData, ForecastListItem } from '../../types';
+import { useWeather } from '../../context/WeatherContext';
 import WeatherIcon from './WeatherIcon';
 
 interface ForecastCardProps {
@@ -24,6 +25,8 @@ function groupByLocalDay(
 }
 
 const ForecastCard: React.FC<ForecastCardProps> = ({ forecastData }) => {
+  const { displayCityName } = useWeather();
+  const forecastCityLabel = displayCityName ?? forecastData.city.name;
   const tz = forecastData.city.timezone ?? 0;
 
   const dailyRows = useMemo(() => {
@@ -55,7 +58,7 @@ const ForecastCard: React.FC<ForecastCardProps> = ({ forecastData }) => {
       <div className="p-4 sm:p-5 bg-gradient-to-r from-blue-600 to-indigo-700 dark:from-blue-800 dark:to-indigo-900 text-white">
         <h3 className="text-lg font-semibold">5-day forecast</h3>
         <p className="text-sm opacity-90">
-          {forecastData.city.name}, {forecastData.city.country}
+          {forecastCityLabel}, {forecastData.city.country}
         </p>
       </div>
 
