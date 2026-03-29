@@ -13,11 +13,14 @@ A polished weather dashboard built with React, TypeScript, and Tailwind CSS. It 
 - **Search UX**: **Enter** or **Search** submits the form; **Geocoding API** suggestions (debounced) with a dropdown to pick a city.
 - **Refresh & last updated**: Toolbar shows **relative** last update (e.g. “2 mins ago”, refreshed every 30s) and a **Refresh** control to reload the current city.
 - **Weather-based UI**: Dashboard background and card header gradients react to condition (clear, rain, clouds, thunderstorm, snow, fog, day/night).
-- **Context & persistence**: Favorites load from **`localStorage`** on app start; weather context tracks **`currentCityQuery`**, **`lastUpdated`**, and **`refreshWeather()`**.
+- **Context & persistence**: Favorites load from **`localStorage`** on app start; weather context tracks **`currentCityQuery`**, **`lastCoords`** (when using GPS), **`lastUpdated`**, and **`refreshWeather()`**.
+- **Your location**: **Use my location** uses the browser **Geolocation API** (with permission), then loads weather via OpenWeather **`lat` / `lon`**. The **city title** uses the **Geocoding reverse** API (`/geo/1.0/reverse`) and prefers the **second** result (main city) so hyperlocal station names (e.g. a neighborhood) are not shown instead of the city (e.g. Bengaluru).
+- **Default city**: The dashboard initially loads **Delhi**; you can switch with search or **Use my location**.
 
 ## Features
 
 - Real-time weather from [OpenWeatherMap](https://openweathermap.org/) (current + 5-day/3-hour forecast)
+- **Browser location**: optional “Use my location” flow (HTTPS or `localhost` recommended)
 - Geocoding-powered city search with optional suggestions
 - User authentication (demo: local storage)
 - Favorite locations with persistence
@@ -121,11 +124,11 @@ src/
 
 The app calls:
 
-- `GET /data/2.5/weather` — current weather  
-- `GET /data/2.5/forecast` — 5-day forecast in 3-hour steps  
+- `GET /data/2.5/weather` — current weather (`q=city` or `lat` + `lon`)  
+- `GET /data/2.5/forecast` — 5-day forecast in 3-hour steps (same query style)  
 - `GET /geo/1.0/direct` — city search suggestions  
 
-All use the same `VITE_OPENWEATHERMAP_API_KEY`.
+All use the same `VITE_OPENWEATHERMAP_API_KEY`. Location-based loads use **`lat` / `lon`** from the browser geolocation result. **Reverse geocoding** (`/geo/1.0/reverse`) picks a friendlier **city label** for the UI than the raw `name` from the weather-by-coordinates response.
 
 ## Contributing
 

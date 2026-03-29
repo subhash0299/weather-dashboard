@@ -19,8 +19,10 @@ function formatLocalTime(unixUtc: number, timezoneOffsetSec: number): string {
 }
 
 const WeatherCard: React.FC<WeatherCardProps> = ({ weatherData }) => {
-  const { favoriteLocations, addToFavorites, removeFromFavorites } = useWeather();
+  const { favoriteLocations, addToFavorites, removeFromFavorites, displayCityName } = useWeather();
   const { isAuthenticated } = useAuth();
+
+  const cityTitle = displayCityName ?? weatherData.name;
 
   const isFavorite = favoriteLocations.some((city) => city.id === weatherData.id);
 
@@ -30,7 +32,7 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ weatherData }) => {
     } else {
       addToFavorites({
         id: weatherData.id,
-        name: weatherData.name,
+        name: cityTitle,
         country: weatherData.sys.country,
       });
     }
@@ -66,7 +68,7 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ weatherData }) => {
       <div className={`p-6 sm:p-8 bg-gradient-to-r ${heroGradient} text-white`}>
         <div className="flex justify-between items-start gap-4">
           <div className="min-w-0">
-            <h2 className="text-3xl sm:text-4xl font-bold truncate">{weatherData.name}</h2>
+            <h2 className="text-3xl sm:text-4xl font-bold truncate">{cityTitle}</h2>
             <p className="text-sm opacity-90">{weatherData.sys.country}</p>
             <p className="text-sm mt-1 opacity-80">{currentDate}</p>
           </div>
@@ -113,7 +115,7 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ weatherData }) => {
       </div>
 
       <div className="bg-white dark:bg-gray-800 p-6 sm:p-8">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4">
           <div className="flex items-start gap-3">
             <Wind className="w-5 h-5 text-blue-600 dark:text-blue-400 mt-0.5 shrink-0" />
             <div>
@@ -163,28 +165,31 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ weatherData }) => {
           </div>
 
           <div className="flex items-start gap-3">
-            <div className="flex flex-col gap-1 shrink-0 mt-0.5">
-              <Sunrise className="w-5 h-5 text-amber-500" aria-hidden />
-              <Sunset className="w-5 h-5 text-orange-400" aria-hidden />
-            </div>
-            <div>
-              <p className="text-sm text-gray-500 dark:text-gray-400">Sunrise</p>
-              <p className="font-medium text-gray-800 dark:text-gray-200">
-                {formatLocalTime(weatherData.sys.sunrise, tz)}
-              </p>
-              <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">Sunset</p>
-              <p className="font-medium text-gray-800 dark:text-gray-200">
-                {formatLocalTime(weatherData.sys.sunset, tz)}
-              </p>
-            </div>
-          </div>
-
-          <div className="flex items-start gap-3 sm:col-span-2">
             <Thermometer className="w-5 h-5 text-blue-600 dark:text-blue-400 mt-0.5 shrink-0" />
             <div>
               <p className="text-sm text-gray-500 dark:text-gray-400">Min / Max</p>
               <p className="font-medium text-gray-800 dark:text-gray-200">
                 {Math.round(weatherData.main.temp_min)}° / {Math.round(weatherData.main.temp_max)}°
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-start gap-3">
+            <Sunrise className="w-5 h-5 text-amber-500 mt-0.5 shrink-0" aria-hidden />
+            <div>
+              <p className="text-sm text-gray-500 dark:text-gray-400">Sunrise</p>
+              <p className="font-medium text-gray-800 dark:text-gray-200">
+                {formatLocalTime(weatherData.sys.sunrise, tz)}
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-start gap-3">
+            <Sunset className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" aria-hidden />
+            <div>
+              <p className="text-sm text-gray-500 dark:text-gray-400">Sunset</p>
+              <p className="font-medium text-gray-800 dark:text-gray-200">
+                {formatLocalTime(weatherData.sys.sunset, tz)}
               </p>
             </div>
           </div>
